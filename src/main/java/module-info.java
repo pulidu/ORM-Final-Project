@@ -12,6 +12,7 @@ module lk.ijse.orm_final {
 
     exports lk.ijse.orm_final;
 
+    //controller
     opens lk.ijse.orm_final.controller to javafx.fxml;
     opens lk.ijse.orm_final to javafx.fxml;
 
