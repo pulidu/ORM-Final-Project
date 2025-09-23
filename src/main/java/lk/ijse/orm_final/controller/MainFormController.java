@@ -56,10 +56,7 @@ public class MainFormController {
         }
     }
 
-    @FXML
-    void btnDashboardOnAction(ActionEvent event) {
-        loadForm("/loginForm2.fxml", btnDashboard);
-    }
+
 
     @FXML
     void btnProgramOnAction(ActionEvent event) {
@@ -112,7 +109,7 @@ public class MainFormController {
     /** Utility method to load forms & highlight active button */
     private void loadForm(String fxmlPath, JFXButton activeButton) {
         try {
-            changeForm.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource(fxmlPath)));
+            changeForm.getChildren().setAll((Node) FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath))));
             resetButtonStyles();
             highlightButton(activeButton);
         } catch (IOException e) {
@@ -136,4 +133,6 @@ public class MainFormController {
         btnLessons.setStyle(style);
     }
 
+    public void btnDashboardOnAction(ActionEvent event) {loadForm("dashboard.fxml", btnDashboard);
+    }
 }
