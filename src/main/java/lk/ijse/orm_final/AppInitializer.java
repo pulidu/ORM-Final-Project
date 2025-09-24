@@ -22,6 +22,7 @@ public class AppInitializer extends Application {
         primaryStage.setTitle("Login Form");
         primaryStage.setScene(scene);
         primaryStage.centerOnScreen();
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 }
