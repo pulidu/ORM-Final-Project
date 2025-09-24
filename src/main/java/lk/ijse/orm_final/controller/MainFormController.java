@@ -104,7 +104,7 @@ public class MainFormController {
 
     @FXML
     void btnPaymentOnAction(ActionEvent event) {
-        loadForm("/paymentTableForm.fxml", btnPayment);
+        loadForm("/PaymentTableForm.fxml", btnPayment);
     }
 
     @FXML

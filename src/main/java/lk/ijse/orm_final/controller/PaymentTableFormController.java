@@ -3,11 +3,9 @@ package lk.ijse.orm_final.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import lk.ijse.orm_final.bo.BOFactory;
 import lk.ijse.orm_final.bo.custom.PaymentBO;
 import lk.ijse.orm_final.dto.PaymentDTO;
@@ -48,36 +46,10 @@ public class PaymentTableFormController {
 
     @FXML
     public void initialize() {
-        // Setup columns
-        colPaymentId.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getPaymentId()));
-        colStudent.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getStudentId())); // now using ID
-        colProgram.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getProgramId())); // now using ID
-        colAmount.setCellValueFactory(cell -> new SimpleObjectProperty<>(cell.getValue().getAmount()));
-        colDate.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDate()));
-        colStatus.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getStatus()));
 
-        // Editable Status column
-        colStatus.setCellFactory(TextFieldTableCell.forTableColumn());
-        colStatus.setOnEditCommit(event -> {
-            PaymentTM payment = event.getRowValue();
-            payment.setStatus(event.getNewValue());
-            try {
-                assert paymentBO != null;
-                paymentBO.updateStatus(payment.getPaymentId(), event.getNewValue());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-        // Load DB data initially
-        loadPayments();
-
-        // 🔍 Real-time search listeners
-        txtStuID.textProperty().addListener((obs, oldText, newText) -> searchPayments());
-        txCouID.textProperty().addListener((obs, oldText, newText) -> searchPayments());
     }
 
-    private void loadPayments() {
+    private void loadPayments(String s) {
         paymentList.clear();
         try {
             List<PaymentDTO> dtos = paymentBO.getAllPayments();
@@ -129,8 +101,8 @@ public class PaymentTableFormController {
         tblPayments.setItems(filteredList);
     }
 
-
-
-
-
+    @FXML
+    void btnAddPayement(ActionEvent event) {
+        loadPayments("/PayementForm.fxml" );
+    }
 }

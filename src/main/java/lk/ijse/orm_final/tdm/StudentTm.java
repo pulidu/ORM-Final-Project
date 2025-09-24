@@ -11,7 +11,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Data
 
-public class StudentTm {
+public class StudentTm extends StudyAllStudentTm {
     private String studentId;
     private String name;
     private String address;

@@ -14,7 +14,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.orm_final.bo.BOFactory;
 import lk.ijse.orm_final.bo.custom.DashboardBO;
+import lk.ijse.orm_final.bo.custom.StudentBO;
 import lk.ijse.orm_final.dto.StudentDTO;
+import lk.ijse.orm_final.tdm.StudentTm;
 import lk.ijse.orm_final.tdm.StudyAllStudentTm;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -62,11 +64,13 @@ public class DashboardController {
 
     private final DashboardBO dashboardBO = (DashboardBO) BOFactory.getBO(BOFactory.BOType.DASHBOARD);
 
+    StudentBO studentBO = (StudentBO) BOFactory.getBO(BOFactory.BOType.STUDENT);
+
     @FXML
     public void initialize() {
         setCellValueFactory();
         setTotals();
-        loadTableData();
+        loadAllStudent();
         loadStudentChart();
         loadIncome();
     }
@@ -77,10 +81,29 @@ public class DashboardController {
         colDate.setCellValueFactory(new PropertyValueFactory<>("registrationDate"));
     }
 
+    private void loadAllStudent() {
+        List<StudentDTO> allStudent = studentBO.getAllStudent();
+        ObservableList<StudyAllStudentTm> studentTms = FXCollections.observableArrayList();
+
+        for (StudentDTO studentDTO : allStudent) {
+            studentTms.add(new StudentTm(
+                    studentDTO.getStudentId(),
+                    studentDTO.getName(),
+                    studentDTO.getAddress(),
+                    studentDTO.getTel(),
+                    (Date) studentDTO.getRegistrationDate(),
+                    null
+            ));
+        }
+        tblStudyAll.setItems(studentTms);
+    }
+
     private void setTotals() {
         lblTotalPrograms.setText(String.valueOf(dashboardBO.getCulinaryProgramCount()));
         lblTotalStudent.setText(String.valueOf(dashboardBO.getStudentCount()));
         lblTotalInstructor.setText(String.valueOf(dashboardBO.getInstructorCount()));
+        lblStudentCount.setText(String.valueOf(dashboardBO.getStudentCount()));
+
     }
 
     private void loadTableData() {
