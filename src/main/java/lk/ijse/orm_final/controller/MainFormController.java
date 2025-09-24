@@ -5,7 +5,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -16,6 +18,8 @@ import java.util.Objects;
 
 public class MainFormController {
 
+    public ImageView btnback;
+    public AnchorPane dashboardForm;
     @FXML
     private JFXButton btnDashboard;
 
@@ -49,11 +53,26 @@ public class MainFormController {
     public void initialize() {
         try {
             // Default load dashboard
-            changeForm.getChildren().setAll((Node) FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/loginForm2.fxml"))));
+            changeForm.getChildren().setAll((Node) FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/dashboard.fxml"))));
             highlightButton(btnDashboard);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        btnback.setOnMouseClicked((MouseEvent mouseEvent) -> {
+            Stage currentStage = (Stage) btnback.getScene().getWindow();
+            currentStage.close();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/loginForm.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Stage loginStage = new Stage();
+            loginStage.setScene(new Scene(root));
+            loginStage.setTitle("Login");
+            loginStage.show();
+        });
     }
 
 
@@ -133,6 +152,6 @@ public class MainFormController {
         btnLessons.setStyle(style);
     }
 
-    public void btnDashboardOnAction(ActionEvent event) {loadForm("dashboard.fxml", btnDashboard);
+    public void btnDashboardOnAction(ActionEvent event) {loadForm("/dashboard.fxml", btnDashboard);
     }
 }
