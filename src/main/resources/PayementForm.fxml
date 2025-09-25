@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="lk.ijse.orm_final.controller.PaymentFormController"
+            prefWidth="800" prefHeight="600"
+            style="-fx-background-color: linear-gradient(to bottom right, #84e4cc, #023e8a);">
+
+    <children>
+        <!-- Header -->
+        <HBox layoutX="40.0" layoutY="25.0" spacing="15.0"
+              style="-fx-background-color: rgba(0,0,0,0.7); -fx-background-radius: 15; -fx-padding: 15;">
+            <children>
+                <ImageView fitHeight="60" fitWidth="60" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/asset-management.gif"/>
+                    </image>
+                </ImageView>
+
+                <Label text="Payment Management" textFill="white">
+                    <font>
+                        <Font name="Segoe UI Bold" size="26.0"/>
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+
+        <!-- Form Card -->
+        <VBox layoutX="60.0" layoutY="130.0" spacing="20.0" alignment="TOP_CENTER"
+              style="-fx-background-color: white; -fx-background-radius: 15; -fx-padding: 30; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5);"
+              prefWidth="680" prefHeight="380">
+
+            <GridPane hgap="15" vgap="18">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" minWidth="180"/>
+                    <ColumnConstraints minWidth="300"/>
+                </columnConstraints>
+
+                <!-- Payment ID -->
+                <Label text="Payment ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtPaymentId" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                           style="-fx-background-radius: 10; -fx-border-color: #CCCCCC; -fx-padding: 6;"/>
+
+                <!-- Student -->
+                <Label text="Student:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cmbStudent" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="250"
+                          style="-fx-background-radius: 10;"/>
+
+                <!-- Program -->
+                <Label text="Program:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cmbProgram" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="250"
+                          style="-fx-background-radius: 10;"/>
+
+                <!-- Amount -->
+                <Label text="Amount (LKR):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtAmount" GridPane.rowIndex="3" GridPane.columnIndex="1"
+                           style="-fx-background-radius: 10; -fx-border-color: #CCCCCC; -fx-padding: 6;"/>
+
+                <!-- Payment Date -->
+                <Label text="Payment Date:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="dpPaymentDate" GridPane.rowIndex="4" GridPane.columnIndex="1"
+                            style="-fx-background-radius: 10;"/>
+
+                <!-- Status -->
+                <Label text="Status:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cmbStatus" GridPane.rowIndex="5" GridPane.columnIndex="1" prefWidth="250"
+                          style="-fx-background-radius: 10;"/>
+            </GridPane>
+
+            <!-- Action Buttons -->
+            <HBox spacing="20" alignment="CENTER">
+                <Button text="💳 Make Payment" fx:id="btnMakePayment" onAction="#btnMakePaymentOnAction"
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-background-radius: 12; -fx-padding: 8 16; -fx-font-size: 14;"/>
+                <Button text="❌ Cancel" fx:id="btnCancel" onAction="#btnCancelOnAction"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 12; -fx-padding: 8 16; -fx-font-size: 14;"/>
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to bottom right, #84e4cc, #023e8a);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.orm_final.controller.PaymentTableFormController">
+
+    <children>
+        <!-- Header -->
+        <HBox layoutX="40.0" layoutY="25.0" spacing="15.0" style="-fx-background-color: rgba(0,0,0,0.7); -fx-background-radius: 15; -fx-padding: 15;">
+            <children>
+                <ImageView fitHeight="60" fitWidth="60" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/financial-analysis.gif" />
+                    </image>
+                </ImageView>
+
+                <Label text="Payment Records" textFill="white">
+                    <font>
+                        <Font name="Segoe UI Bold" size="26.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+
+        <!-- Table -->
+        <TableView fx:id="tblPayments" editable="true" layoutX="50.0" layoutY="120.0" prefHeight="320.0" prefWidth="700.0" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-border-color: #DDD; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5);">
+            <columns>
+                <TableColumn fx:id="colPaymentId" prefWidth="120.0" text="Payment ID" />
+                <TableColumn fx:id="colStudent" prefWidth="150.0" text="Student" />
+                <TableColumn fx:id="colProgram" prefWidth="150.0" text="Program" />
+                <TableColumn fx:id="colAmount" prefWidth="120.0" text="Amount (LKR)" />
+                <TableColumn fx:id="colDate" prefWidth="120.0" text="Date" />
+                <TableColumn fx:id="colStatus" prefWidth="120.0" text="Status" />
+            </columns>
+        </TableView>
+      <Button layoutX="417.0" layoutY="58.0" mnemonicParsing="false" onAction="#btnAddPayement" text="Add Payement" />
+    </children>
+</AnchorPane>
