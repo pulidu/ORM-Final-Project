@@ -5,12 +5,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import lk.ijse.orm_final.bo.BOFactory;
 import lk.ijse.orm_final.bo.custom.PaymentBO;
 import lk.ijse.orm_final.dto.PaymentDTO;
 import lk.ijse.orm_final.tdm.PaymentTM;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -46,28 +53,29 @@ public class PaymentTableFormController {
 
     @FXML
     public void initialize() {
+        setupTableColumns();
+        loadTableData();
+
 
     }
 
-    private void loadPayments(String s) {
-        paymentList.clear();
-        try {
-            List<PaymentDTO> dtos = paymentBO.getAllPayments();
-            for (PaymentDTO dto : dtos) {
-                paymentList.add(new PaymentTM(
-                        dto.getPaymentId(),
-                        dto.getStudentId(),   // ✅ Student ID
-                        dto.getProgramId(),   // ✅ Program ID
-                        dto.getAmount(),
-                        dto.getPaymentDate(),
-                        dto.getStatus()
+    private void loadTableData(){
+        ArrayList<PaymentDTO> allPayment = (ArrayList<PaymentDTO>) paymentBO.getAllPayments();
+        ObservableList<PaymentTM>  tableList = FXCollections.observableArrayList();
+
+        if (allPayment != null) {
+            for (PaymentDTO paymentDTO : allPayment) {
+                tableList.add(new PaymentTM(
+                        paymentDTO.getPaymentId(),
+                        paymentDTO.getStudentId(),
+                        paymentDTO.getProgramId(),
+                        paymentDTO.getAmount(),
+                        paymentDTO.getPaymentDate(),
+                        paymentDTO.getStatus()
                 ));
             }
-            tblPayments.setItems(paymentList);
-        } catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Failed to load payments!").show();
         }
+        tblPayments.setItems(tableList);
     }
 
     // 🔍 Real-time search logic (by StudentID & ProgramID)
@@ -103,6 +111,27 @@ public class PaymentTableFormController {
 
     @FXML
     void btnAddPayement(ActionEvent event) {
-        loadPayments("/PayementForm.fxml" );
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/PayementForm.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("New Window");
+            stage.setScene(new Scene(root));
+            stage.show(); // or stage.showAndWait() if you want it modal
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void setupTableColumns(){
+        colPaymentId.setCellValueFactory(new PropertyValueFactory<>("paymentId"));
+        colStudent.setCellValueFactory(new PropertyValueFactory<>("studentId"));
+        colProgram.setCellValueFactory(new PropertyValueFactory<>("programId"));
+        colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
     }
 }
